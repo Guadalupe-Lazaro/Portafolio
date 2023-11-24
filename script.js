@@ -1,41 +1,36 @@
-let menuVisible = false;
-//Función que oculta o muestra el menu
-function mostrarOcultarMenu(){
-    if(menuVisible){
-        document.getElementById("nav").classList ="";
-        menuVisible = false;
-    }else{
-        document.getElementById("nav").classList ="responsive";
-        menuVisible = true;
-    }
+//script.js
+document.addEventListener('DOMContentLoaded', function(){
+    //Simula un retraso de 2 segundos para la pantalla de carga 
+    setTimeout(function(){
+        hideSplashScreen();
+    }, 2000);
+});
+
+function hideSplashScreen(){
+    const splashScreen=document.getElementById('splash-screen');
+    splashScreen.style.display= 'none';
+
+    //Muestra la pantalla de inicio
+    const homeScreen = document.getElementById('home-screen');
+    homeScreen.classList.remove('hidden');
+
+    const startButton = document.getElementById('start-button');
+    startButton.addEventListener('click', function(){
+        // Muestra la alerta y redirige a otra página después de hacer clic en OK
+        const confirmation = confirm('¡La aplicación ha comenzado! ¿Quieres visitar mi portafolio web?');
+        
+        if (confirmation) {
+            window.location.href = 'portafolio.html';
+        }
+    });
 }
 
-function seleccionar(){
-    //oculto el menu una vez que selecciono una opcion
-    document.getElementById("nav").classList = "";
-    menuVisible = false;
+if('Notification' in window){
+    Notification.requestPermission().then(function(permission){
+        if (permission == 'granted'){
+            new Notification('¡Bienvenido!',{
+                body: 'Gracias por visitar mi Portafolio web'
+            })
+        }
+    })
 }
-//Funcion que aplica las animaciones de las habilidades
-function efectoHabilidades(){
-    var skills = document.getElementById("skills");
-    var distancia_skills = window.innerHeight - skills.getBoundingClientRect().top;
-    if(distancia_skills >= 300){
-        let habilidades = document.getElementsByClassName("progreso");
-        habilidades[0].classList.add("javascript");
-        habilidades[1].classList.add("htmlcss");
-        habilidades[2].classList.add("photoshop");
-        habilidades[3].classList.add("wordpress");
-        habilidades[4].classList.add("drupal");
-        habilidades[5].classList.add("comunicacion");
-        habilidades[6].classList.add("trabajo");
-        habilidades[7].classList.add("creatividad");
-        habilidades[8].classList.add("dedicacion");
-        habilidades[9].classList.add("proyect");
-    }
-}
-
-
-//detecto el scrolling para aplicar la animacion de la barra de habilidades
-window.onscroll = function(){
-    efectoHabilidades();
-} 
